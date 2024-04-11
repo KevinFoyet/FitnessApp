@@ -1,18 +1,17 @@
 import * as React from "react";
 import { StatusBar } from 'expo-status-bar';
 import {
-  Pressable,
+  Text,
   StyleSheet,
   TouchableOpacity,
-  Text,
-  ImageBackground,
   View,
+  ImageBackground,
   Dimensions,
-  Platform,
+  SafeAreaView,
 } from "react-native";
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Image } from "expo-image";
-import { Border, Color, FontSize, FontFamily } from "../GlobalStyles";
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
 
 // Get device width and height
 const { width, height } = Dimensions.get('window');
@@ -25,249 +24,303 @@ const horizontalScale = (size) => (width / guidelineBaseWidth) * size;
 const verticalScale = (size) => (height / guidelineBaseHeight) * size;
 
 const moderateScale = (size, factor = 0) => size + (horizontalScale(size) - size) * factor;
-const moderateScaleH = (size, factor = 0) => size + (verticalScale(size) - size) * factor;
+const moderateScaleH = (size, factor = 0) => size + (horizontalScale(size) - size) * factor;
 
 const WelcomeScreen = () => {
   return (
-    <View style={styles.welcomeScreen}>
-      <StatusBar style="Dark"/>
-      <TouchableOpacity
-        style={[styles.wrapper, styles.framePosition]}
-        activeOpacity={0.2}
-        onPress={() => {}}
-      >
-        <Image
-          style={[styles.icon, styles.iconLayout1]}
-          contentFit="cover"
-          source={require("../assets/rectangle-6.png")}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.iconPosition}
-        activeOpacity={0.2}
-        onPress={() => {}}
-      >
-        <Text style={[styles.skip1, styles.skip1FlexBox]}>skip</Text>
-      </TouchableOpacity>
-      <ImageBackground
-        style={[styles.download1Icon, styles.iconPosition]}
-        resizeMode="cover"
-        source={require("../assets/download.png")}
-      />
-      <Text style={[styles.createAFreeContainer, styles.skip1FlexBox]}>
-        <Text style={styles.createAFree}>{`Create a free account `}</Text>
-        <Text style={styles.receiveAccessToTypo}>{` 
+    <SafeAreaView style = {{flex: 1}}>
+      <View style={styles.welcomeScreen}>
+      <View style={styles.frame}>
+        <View style={[styles.frame1, styles.frameFlexBox1]}>
+          <View style={styles.frameFlexBox}>
+            <TouchableOpacity activeOpacity={0.2} onPress={() => {}}>
+              <Text style={[styles.skip1, styles.skip1FlexBox]}>skip</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.frame3, styles.frameFlexBox]}>
+            <Text style={[styles.createAFreeContainer, styles.skip1FlexBox]}>
+              <Text style={styles.createAFree}>{`Create a free account `}</Text>
+              <Text style={styles.receiveAccessToTypo}>{` 
  receive access to unlimited resources in seconds `}</Text>
-      </Text>
-      <Text style={[styles.continueWithGoogle, styles.skip1FlexBox]}>
-        Continue with Google
-      </Text>
-      <ImageBackground
-        style={[styles.googleLogo1Icon, styles.iconPosition]}
-        resizeMode="cover"
-        source={require("../assets/Google_Logo.png")}
-      />
-      <TouchableOpacity
-        style={[styles.wrapper, styles.framePosition]}
-        activeOpacity={0.2}
-        onPress={() => {}}
-      >
-        <Image
-          style={[styles.icon1, styles.iconLayout1]}
-          contentFit="cover"
-          source={require("../assets/rectangle-3.png")}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.frame, styles.framePosition]}
-        activeOpacity={0.2}
-        onPress={() => {}}
-      >
-        <Image
-          style={[styles.icon2, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/rectangle-4.png")}
-        />
-      </TouchableOpacity>
-      <Text style={[styles.login, styles.loginSpaceBlock]}>Login</Text>
-      <TouchableOpacity
-        style={[styles.frame, styles.framePosition]}
-        activeOpacity={0.2}
-        onPress={() => {}}
-      >
-        <Image
-          style={[styles.icon3, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/rectangle-5.png")}
-        />
-      </TouchableOpacity>
-      <Text style={[styles.signUp, styles.signUpTypo]}>Sign Up</Text>
-      <Text
-        style={[styles.byContinuingYou, styles.receiveAccessToTypo]}
-      >{`By continuing, you agree to Nutriphi's Terms of Services and
+            </Text>
+          </View>
+        </View>
+        <View style={styles.frame4}>
+          <View style={[styles.frame1, styles.frameFlexBox1]}>
+            <View style={[styles.frame6, styles.frameFlexBox]}>
+              <ImageBackground
+                style={styles.download1Icon}
+                resizeMode="cover"
+                source={require("../assets/download.png")}
+              />
+            </View>
+            <View style={styles.frame7}>
+              <View style={styles.frameFlexBox}>
+                <View style={styles.frame9}>
+                  <TouchableOpacity
+                    style={[styles.wrapper, styles.logo1IconPosition]}
+                    activeOpacity={0.2}
+                    onPress={() => {}}
+                  >
+                    <Image
+                      style={[styles.icon, styles.iconLayout]}
+                      contentFit="cover"
+                      source={require("../assets/rectangle-6.png")}
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={[styles.continueWithGoogle, styles.continuePosition]}
+                  >
+                    Continue with Google
+                  </Text>
+                  <ImageBackground
+                    style={[styles.googleLogo1Icon, styles.logo1IconPosition]}
+                    resizeMode="cover"
+                    source={require("../assets/Google_Logo.png")}
+                  />
+                </View>
+              </View>
+              <View style={[styles.frame10, styles.frameFlexBox]}>
+                <View style={styles.frame9}>
+                  <TouchableOpacity
+                    style={[styles.wrapper, styles.logo1IconPosition]}
+                    activeOpacity={0.2}
+                    onPress={() => {}}
+                  >
+                    <Image
+                      style={[styles.icon, styles.iconLayout]}
+                      contentFit="cover"
+                      source={require("../assets/rectangle-3.png")}
+                    />
+                  </TouchableOpacity>
+                  <ImageBackground
+                    style={[styles.appleLogo1Icon, styles.logo1IconPosition]}
+                    resizeMode="cover"
+                    source={require("../assets/Apple_Logo.png")}
+                  />
+                  <Text
+                    style={[styles.continueWithApple, styles.continuePosition]}
+                  >
+                    Continue with Apple
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={[styles.frame12, styles.frameFlexBox]}>
+            <View style={styles.frame9}>
+              <TouchableOpacity
+                style={[
+                  styles.rectangleTouchableopacity,
+                  styles.logo1IconPosition,
+                ]}
+                activeOpacity={0.2}
+                onPress={() => {}}
+              >
+                <Image
+                  style={[styles.icon, styles.iconLayout]}
+                  contentFit="cover"
+                  source={require("../assets/rectangle-4.png")}
+                />
+              </TouchableOpacity>
+              <Text style={[styles.login, styles.loginPosition]}>Login</Text>
+              <TouchableOpacity
+                style={[
+                  styles.rectangleTouchableopacity,
+                  styles.logo1IconPosition,
+                ]}
+                activeOpacity={0.2}
+                onPress={() => {}}
+              >
+                <Image
+                  style={[styles.icon3, styles.iconLayout]}
+                  contentFit="cover"
+                  source={require("../assets/rectangle-5.png")}
+                />
+              </TouchableOpacity>
+              <Text style={[styles.signUp, styles.loginPosition]}>Sign Up</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View style={[styles.frame14, styles.frameFlexBox1]}>
+        <Text
+          style={[styles.byContinuingYou, styles.receiveAccessToTypo]}
+        >{`By continuing, you agree to Blah’s Terms of Services and
 acknowledge Blah’s Privacy Policy. `}</Text>
-      <ImageBackground
-        style={[styles.appleLogo1Icon, styles.iconPosition]}
-        resizeMode="cover"
-        source={require("../assets/Apple_Logo.png")}
-      />
-      <Text style={[styles.continueWithApple, styles.signUpTypo]}>
-        Continue with Apple
-      </Text>
+      </View>
     </View>
+    </SafeAreaView>
+    
   );
 };
 
 const styles = StyleSheet.create({
-  framePosition: {
-    height: moderateScaleH(RFValue(36)),
-    top: "50%",
-    left: "50%",
-    position: "absolute",
-  },
-  iconLayout1: {
-    height: "100%",
-    borderRadius: moderateScale(RFValue(Border.br_8xs)),
-    marginLeft: moderateScale(RFValue(-142)),
-    width: "100%",
-    
+  frameFlexBox1: {
+    justifyContent: "center",
+    alignSelf: "stretch",
+    overflow: "hidden",
   },
   skip1FlexBox: {
     textAlign: "center",
     color: Color.colorBlack,
   },
-  iconPosition: {
+  frameFlexBox: {
+    alignItems: "flex-end",
+    justifyContent: "center",
+    alignSelf: "stretch",
+    overflow: "hidden",
+  },
+  logo1IconPosition: {
     top: "50%",
     left: "50%",
     position: "absolute",
   },
   iconLayout: {
-    marginTop: moderateScaleH(RFValue(205)),
     height: "100%",
     borderRadius: moderateScale(RFValue(Border.br_8xs)),
+    marginTop: moderateScale(RFValue(-18)),
     width: "100%",
   },
-  loginSpaceBlock: {
-    marginTop: moderateScaleH(RFValue(217)),
-    fontSize: moderateScale(RFValue(FontSize.size_3xs)),
-  },
-  signUpTypo: {
-    color: Color.colorWhite,
-    textAlign: "center",
-    fontFamily: FontFamily.interBold,
-    fontWeight: "700",
+  continuePosition: {
+    marginTop: moderateScale(RFValue(-7)),
     top: "50%",
     left: "50%",
     position: "absolute",
+    textAlign: "center",
+    fontFamily: FontFamily.interLight,
+    fontWeight: "700",
+    fontSize: moderateScale(RFValue(FontSize.size_xs)),
+  },
+  loginPosition: {
+    marginTop: moderateScale(RFValue(-6)),
+    top: "50%",
+    left: "50%",
+    position: "absolute",
+    fontSize: moderateScale(RFValue(FontSize.size_3xs)),
+    textAlign: "center",
+    fontFamily: FontFamily.interLight,
+    fontWeight: "700",
   },
   receiveAccessToTypo: {
     fontSize: moderateScale(RFValue(FontSize.size_3xs)),
     fontFamily: FontFamily.interLight,
     fontWeight: "300",
   },
-  icon: {
-    marginTop: moderateScaleH(RFValue(91)),
-  },
-  wrapper: {
-    width: moderateScale(RFValue(288)),
-  },
   skip1: {
-    marginTop: moderateScaleH(RFValue(-300)),
-    marginLeft: moderateScale(RFValue(123)),
     fontFamily: FontFamily.interLight,
     fontWeight: "300",
-    color: Color.colorBlack,
     fontSize: moderateScale(RFValue(FontSize.size_xs)),
-  },
-  download1Icon: {
-    marginTop: moderateScaleH(RFValue(-168)),
-    marginLeft: moderateScale(RFValue(-115)),
-    width: moderateScale(RFValue(234)),
-    height: moderateScaleH(RFValue(168)),
+    textAlign: "center",
   },
   createAFree: {
-    fontSize: moderateScale(RFValue(20)),
+    fontSize: moderateScale(RFValue(FontSize.size_xl)),
     fontWeight: "700",
     fontFamily: FontFamily.interBold,
   },
   createAFreeContainer: {
-    marginTop: moderateScaleH(RFValue(-270)),
-    marginLeft: moderateScale(RFValue(-112)),
-    top: "50%",
-    left: "50%",
-    position: "absolute",
+    alignSelf: "stretch",
+  },
+  frame3: {
+    marginTop: moderateScale(RFValue(13)),
+  },
+  frame1: {
+    alignItems: "center",
+  },
+  download1Icon: {
+    height: moderateScale(RFValue(168)),
+    alignSelf: "stretch",
+  },
+  frame6: {
+    paddingHorizontal: moderateScale(RFValue(Padding.p_8xl)),
+    paddingVertical: moderateScale(RFValue(0)),
+  },
+  icon: {
+    marginLeft: moderateScale(RFValue(-144)),
+  },
+  wrapper: {
+    width: moderateScale(RFValue(288)),
+    height: moderateScale(RFValue(36)),
   },
   continueWithGoogle: {
-    marginTop: moderateScaleH(RFValue(102)),
-    marginLeft: moderateScale(RFValue(-59)),
-    fontFamily: FontFamily.interBold,
-    fontWeight: "300",
+    marginLeft: moderateScale(RFValue(-61)),
     color: Color.colorBlack,
-    fontSize: moderateScale(RFValue(FontSize.size_xs)),
-    top: "50%",
-    left: "50%",
-    position: "absolute",
   },
   googleLogo1Icon: {
-    marginTop: moderateScaleH(RFValue(98)),
-    marginLeft: moderateScale(RFValue(-133)),
+    marginTop: moderateScale(RFValue(-11)),
+    marginLeft: moderateScale(RFValue(-135)),
     width: moderateScale(RFValue(23)),
-    height: moderateScaleH(RFValue(23)),
+    height: moderateScale(RFValue(23)),
   },
-  icon1: {
-    marginTop: moderateScaleH(RFValue(141)),
-  },
-  icon2: {
-    marginLeft: moderateScale(RFValue(-142)),
-    marginTop: moderateScaleH(RFValue(205)),
-  },
-  frame: {
-    width: moderateScale(RFValue(142)),
-  },
-  login: {
-    marginLeft: moderateScale(RFValue(-84)),
-    textAlign: "center",
-    color: Color.colorBlack,
-    fontFamily: FontFamily.interLight,
-    fontWeight: "700",
-    top: "50%",
-    left: "50%",
-    position: "absolute",
-  },
-  icon3: {
-    marginLeft: moderateScale(RFValue(4)),
-  },
-  signUp: {
-    marginLeft: moderateScale(RFValue(56)),
-    marginTop: moderateScaleH(RFValue(217)),
-    fontSize: moderateScale(RFValue(FontSize.size_3xs)),
-  },
-  byContinuingYou: {
-    marginTop: moderateScaleH(RFValue(251)),
-    marginLeft: moderateScale(RFValue(-134)),
-    textAlign: "center",
-    color: Color.colorBlack,
-    top: "50%",
-    left: "50%",
-    position: "absolute",
+  frame9: {
+    height: moderateScale(RFValue(36)),
+    alignSelf: "stretch",
+    overflow: "hidden",
   },
   appleLogo1Icon: {
-    marginTop: moderateScaleH(RFValue(147)),
-    marginLeft: moderateScale(RFValue(-131)),
+    marginTop: moderateScale(RFValue(-12)),
+    marginLeft: moderateScale(RFValue(-133)),
     width: moderateScale(RFValue(19)),
-    height: moderateScaleH(RFValue(24)),
+    height: moderateScale(RFValue(24)),
   },
   continueWithApple: {
-    marginTop: moderateScaleH(RFValue(152)),
-    marginLeft: moderateScale(RFValue(-55)),
-    fontSize: moderateScale(RFValue(FontSize.size_xs)),
+    marginLeft: moderateScale(RFValue(-57)),
+    color: Color.colorWhite,
+  },
+  frame10: {
+    marginTop: moderateScale(RFValue(14)),
+  },
+  frame7: {
+    marginTop: moderateScale(RFValue(91)),
+    alignSelf: "stretch",
+    alignItems: "center",
+    overflow: "hidden",
+  },
+  rectangleTouchableopacity: {
+    width: moderateScale(RFValue(142)),
+    height: moderateScale(RFValue(36)),
+  },
+  login: {
+    marginLeft: moderateScale(RFValue(-86)),
+    color: Color.colorBlack,
+  },
+  icon3: {
+    marginLeft: moderateScale(RFValue(2)),
+  },
+  signUp: {
+    marginLeft: moderateScale(RFValue(54)),
+    color: Color.colorWhite,
+  },
+  frame12: {
+    marginTop: moderateScale(RFValue(28)),
+  },
+  frame4: {
+    marginTop: moderateScale(RFValue(37)),
+    alignSelf: "stretch",
+    alignItems: "center",
+    overflow: "hidden",
+  },
+  frame: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    overflow: "hidden",
+  },
+  byContinuingYou: {
+    textAlign: "center",
+    color: Color.colorBlack,
+    alignSelf: "stretch",
+  },
+  frame14: {
+    marginTop: moderateScale(RFValue(10)),
   },
   welcomeScreen: {
     backgroundColor: Color.colorWhite,
-    flex: 1,
-    height: '100%',
+    flex: moderateScale(RFValue(1)),
+    paddingHorizontal: moderateScale(RFValue(Padding.p_sm)),
+    paddingVertical: moderateScale(RFValue(Padding.p_4xs)),
+    alignItems: "center",
     overflow: "hidden",
-    width: '100%',
+    width: "100%",
   },
 });
 
