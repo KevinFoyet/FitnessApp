@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { Color, Border, FontFamily, FontSize, Padding } from "../GlobalStyles";
+import { Color, Border, FontFamily, FontSize, Padding } from "../components/GlobalStyles";
 
 // Get device width and height
 const { width, height } = Dimensions.get('window');
@@ -28,7 +28,6 @@ const moderateScaleH = (size, factor = 0) => size + (horizontalScale(size) - siz
 
 const WelcomeScreen = () => {
   return (
-    <SafeAreaView style = {{flex: 1}}>
       <View style={styles.welcomeScreen}>
       <View style={styles.frame}>
         <View style={[styles.frame1, styles.frameFlexBox1]}>
@@ -150,7 +149,6 @@ const WelcomeScreen = () => {
 acknowledge Blah’s Privacy Policy. `}</Text>
       </View>
     </View>
-    </SafeAreaView>
     
   );
 };
