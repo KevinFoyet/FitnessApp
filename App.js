@@ -2,7 +2,7 @@ const Stack = createNativeStackNavigator();
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import QuestionScreen from "./screens/Question_Screen_1";
+import SignUpScreen from "./screens/Sign_Up";
 import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
@@ -20,9 +20,13 @@ const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
 
   const [fontsLoaded, error] = useFonts({
+    "OpenSans-Light": require("./assets/fonts/OpenSans-Light.ttf"),
+    "MeowScript-Regular": require("./assets/fonts/MeowScript-Regular.ttf"),
     "Inter-Light": require("./assets/fonts/Inter-Light.ttf"),
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
     "Inter-Bold": require("./assets/fonts/Inter-Bold.ttf"),
+    "FiraSans-Light": require("./assets/fonts/FiraSans-Light.ttf"),
+    "FiraSans-Regular": require("./assets/fonts/FiraSans-Regular.ttf"),
   });
 
   function MaterialIcon({ name, style }) {
@@ -63,8 +67,8 @@ const App = () => {
           {hideSplashScreen ? (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen
-                name="QuestionScreen"
-                component={QuestionScreen}
+                name="SignUpScreen"
+                component={SignUpScreen}
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>

@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Image } from "expo-image";
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import {RFValue } from 'react-native-responsive-fontsize';
 import { Color, Border, FontFamily, FontSize, Padding } from "../components/GlobalStyles";
 
 // Get device width and height
