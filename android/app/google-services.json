@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1080268547965",
+    "project_id": "nutriphi-4a526",
+    "storage_bucket": "nutriphi-4a526.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080268547965:android:89db909b23767fb7314e14",
+        "android_client_info": {
+          "package_name": "com.nutriphi.nutriphi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNZJi1ePv711kDipu9QeqnCBktZc8irCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

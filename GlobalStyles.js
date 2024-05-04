@@ -6,9 +6,10 @@ export const FontFamily = {
   interLight: "Inter-Light",
   meowScriptRegular: "MeowScript-Regular",
   openSansLight: "OpenSans-Light",
-  firaSansLight: "FiraSans-Light",
+  poppinsLight: "Poppins-Light",
+  poppinsRegular: "Poppins-Regular",
+  poppinsBold: "Poppins-Bold",
   firaSansRegular: "FiraSans-Regular",
-  firaSansBold: "FiraSans-Bold",
 };
 /* font sizes */
 export const FontSize = {
@@ -22,6 +23,10 @@ export const FontSize = {
   size_5xs: 8,
   size_5xl: 24,
   size_3xs: 10,
+  size_21xl: 40,
+  size_13xl: 32,
+  size_17xl: 36,
+  size_7xs: 6,
 };
 /* Colors */
 export const Color = {
@@ -30,10 +35,9 @@ export const Color = {
   colorDarkgray_300: "#979797",
   colorWhite: "#fff",
   colorGainsboro: "#d9d9d9",
-  colorGainsboro_100: "rgba(217, 217, 217, 0.6)",
   colorMediumseagreen: "#6bbb7c",
-  colorCornflowerblue: "#1c6dc1",
   colorWhitesmoke: "#f0f0f0",
+  colorCornflowerblue: "#1c6dc1",
 };
 /* Paddings */
 export const Padding = {
@@ -45,9 +49,6 @@ export const Padding = {
   p_55xl: 74,
   p_59xl: 78,
   p_33xl: 52,
-  p_6xl: 25,
-  p_2xs: 11,
-  p_sm: 14,
 };
 /* border radiuses */
 export const Border = {

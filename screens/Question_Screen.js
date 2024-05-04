@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,23 +7,47 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "@ui-kitten/components";
+import { FontFamily, Border, FontSize, Color } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
-import { Padding, FontFamily, Color, Border, FontSize } from "../components/GlobalStyles5";
-import { RFValue } from 'react-native-responsive-fontsize';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
+import {getFirestore, setDoc, doc } from 'firebase/firestore'; 
+import {getAuth } from 'firebase/auth';
 
 const QuestionScreen = () => {
   const navigation = useNavigation();
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const auth = getAuth();
+  const firestore = getFirestore();
+
+  const handleOptionPress = (option) => {
+    setSelectedOption(option);
+  };
+
+  const saveOptionToFirestore = async () => {
+    setLoading(true);
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(firestore, 'users', user.uid, 'dailyActivities', 'options'), {
+          option: selectedOption,
+        });
+      }
+      navigation.navigate("QuestionScreenGH");
+    } catch (error) {
+      console.error('Error saving option to Firestore:', error);
+    }
+    setLoading(false);
+  };
 
   return (
     <SafeAreaView style={styles.questionScreen}>
-      <StatusBar style="dark"/>
+      <StatusBar style="dark" />
       <View style={[styles.welcomeToNutriphiWrapper, styles.wrapperFlexBox]}>
         <Text
           style={[
             styles.welcomeToNutriphiContainer,
-            styles.veryContainerFlexBox,
+            styles.selectAnOptionFlexBox,
           ]}
         >
           <Text style={styles.welcomeToNutriphiContainer1}>
@@ -41,21 +65,20 @@ const QuestionScreen = () => {
         <Text
           style={[styles.selectAnOption, styles.selectAnOptionTypo]}
         >{`Select an option to continue:
-How would you describe your daily activity?`}</Text>
+  How would you describe your daily activity?`}</Text>
       </View>
       <TouchableOpacity
-        style={[styles.sedentaryStationaryJobAndLWrapper, styles.wrapperBorder]}
+        style={[
+          styles.sedentaryStationaryJobAndLWrapper,
+          styles.wrapperBorder,
+          selectedOption === 'Sedentary' && styles.selectedOption,
+        ]}
         activeOpacity={0.2}
-        onPress={() => {}}
+        onPress={() => handleOptionPress('Sedentary')}
       >
-        <Text
-          style={[
-            styles.sedentaryStationaryJobContainer,
-            styles.selectAnOptionTypo,
-          ]}
-        >
+        <Text style={styles.selectAnOptionTypo}>
           <Text style={styles.sedentaryTypo}>{`Sedentary
-`}</Text>
+  `}</Text>
           <Text style={styles.stationaryJobAnd}>
             Stationary job and little to no exercise
           </Text>
@@ -64,60 +87,62 @@ How would you describe your daily activity?`}</Text>
       <TouchableOpacity
         style={[
           styles.notVeryActiveExercise13TWrapper,
-          styles.veryWrapperBorder,
+          styles.wrapperBorder,
+          selectedOption === 'Not Very Active' && styles.selectedOption,
         ]}
         activeOpacity={0.2}
-        onPress={() => {}}
+        onPress={() => handleOptionPress('Not Very Active')}
       >
-        <Text style={styles.veryContainerTypo}>
+        <Text style={styles.selectAnOptionTypo}>
           <Text style={styles.sedentaryTypo}>{`Not Very Active
-`}</Text>
+  `}</Text>
           <Text style={styles.stationaryJobAnd}>Exercise 1-3 times/week</Text>
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[
           styles.somewhatActiveExercise45TWrapper,
-          styles.veryWrapperBorder,
+          styles.wrapperBorder,
+          selectedOption === 'Somewhat Active' && styles.selectedOption,
         ]}
         activeOpacity={0.2}
-        onPress={() => {}}
+        onPress={() => handleOptionPress('Somewhat Active')}
       >
-        <Text style={styles.veryContainerTypo}>
+        <Text style={styles.selectAnOptionTypo}>
           <Text style={styles.sedentaryTypo}>{`Somewhat Active
-`}</Text>
+  `}</Text>
           <Text style={styles.stationaryJobAnd}>Exercise 4-5 times/week</Text>
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[
           styles.moderatelyActiveDailyExerciWrapper,
-          styles.veryWrapperBorder,
+          styles.wrapperBorder,
+          selectedOption === 'Moderately Active' && styles.selectedOption,
         ]}
         activeOpacity={0.2}
-        onPress={() => {}}
+        onPress={() => handleOptionPress('Moderately Active')}
       >
-        <Text style={styles.veryContainerTypo}>
+        <Text style={styles.selectAnOptionTypo}>
           <Text style={styles.sedentaryTypo}>{`Moderately Active
-`}</Text>
+  `}</Text>
           <Text style={styles.stationaryJobAnd}>
             Daily exercise or intense exercise 3-4 times/week
           </Text>
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.activeIntenseExercise67TiWrapper, styles.wrapperBorder]}
+        style={[
+          styles.activeIntenseExercise67TiWrapper,
+          styles.wrapperBorder,
+          selectedOption === 'Active' && styles.selectedOption,
+        ]}
         activeOpacity={0.2}
-        onPress={() => {}}
+        onPress={() => handleOptionPress('Active')}
       >
-        <Text
-          style={[
-            styles.sedentaryStationaryJobContainer,
-            styles.selectAnOptionTypo,
-          ]}
-        >
+        <Text style={styles.selectAnOptionTypo}>
           <Text style={styles.sedentaryTypo}>{`Active
-`}</Text>
+  `}</Text>
           <Text style={styles.stationaryJobAnd}>
             Intense exercise 6-7 times/week
           </Text>
@@ -126,72 +151,65 @@ How would you describe your daily activity?`}</Text>
       <TouchableOpacity
         style={[
           styles.veryActiveVeryIntenseExercWrapper,
-          styles.veryWrapperBorder,
+          styles.wrapperBorder,
+          selectedOption === 'Very Active' && styles.selectedOption,
         ]}
         activeOpacity={0.2}
-        onPress={() => {}}
+        onPress={() => handleOptionPress('Very Active')}
       >
-        <Text
-          style={[styles.veryActiveVeryContainer, styles.veryContainerTypo]}
-        >
-          <Text style={styles.welcomeToNutriphiContainer1}>
-            <Text style={styles.sedentaryTypo}>{`Very Active
-`}</Text>
-            <Text style={styles.stationaryJobAnd}>
-              Very intense exercise daily or physical job
-            </Text>
+        <Text style={styles.selectAnOptionTypo}>
+          <Text style={styles.sedentaryTypo}>{`Very Active
+  `}</Text>
+          <Text style={styles.stationaryJobAnd}>
+            Very intense exercise daily or physical job
           </Text>
         </Text>
       </TouchableOpacity>
       <View
         style={[styles.weAreHereToHelpYouAchievWrapper, styles.wrapperFlexBox]}
       >
-        <Text style={[styles.weAreHere, styles.weAreHereFlexBox]}>
+        <Text style={styles.weAreHere}>
           We are here to help you achieve your nutritional and fitness goals
         </Text>
       </View>
-      <View style={[styles.questionScreenInner, styles.questionPosition]}>
-        <Button
-          style={[styles.frameChild, styles.framePosition]}
-          title="Continue"
-          size="medium"
-          status="success"
-          appearance="filled"
-          color="#6bbb7c"
-          onPress={() => {}}
-        >
-          Continue
-        </Button>
-      </View>
-      <View style={[styles.questionScreenChild, styles.questionPosition]}>
-        <Button
-          style={[styles.frameItem, styles.framePosition]}
-          title="Back"
-          size="medium"
-          status="success"
-          appearance="outline"
-          color="#fff"
-          onPress={() => navigation.goBack()}
-        >
-          Back
-        </Button>
-      </View>
-      <View style={styles.questionScreenItem} />
+      <TouchableOpacity
+        style={[styles.continueWrapper, styles.wrapperLayout]}
+        activeOpacity={0.2}
+        onPress={saveOptionToFirestore}
+        disabled={loading || !selectedOption}
+      >
+        <Text style={[styles.continue, styles.backTypo]}>
+          {loading ? 'Loading...' : 'Continue'}
+        </Text>
+      </TouchableOpacity>
+      <SafeAreaView style={styles.questionScreenChild} />
+      <TouchableOpacity
+        style={[styles.backWrapper, styles.wrapperLayout]}
+        activeOpacity={0.2}
+        onPress={() => {}}
+      >
+        <Text style={[styles.back, styles.backTypo]}>Back</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  selectedOption: {
+    backgroundColor: Color.colorMediumseagreen,
+    borderColor: 'white',
+    // Add any other styles you want for the selected option
+  },
   wrapperFlexBox: {
-    padding: RFValue(Padding.p_3xs),
-    justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    left: RFValue(0),
-    right: RFValue(0),
+    left: "5%",
+    right: "5%",
+    width: "90%",
+    justifyContent: "center",
     position: "absolute",
   },
-  veryContainerFlexBox: {
+  selectAnOptionFlexBox: {
     display: "flex",
     alignItems: "center",
   },
@@ -200,60 +218,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   wrapperBorder: {
-    paddingVertical: RFValue(Padding.p_12xs),
-    borderWidth: RFValue(1),
-    borderColor: Color.colorGainsboro,
-    borderRadius: RFValue(Border.br_10xs),
-    left: RFValue(36),
-    right: RFValue(37),
-    height: "4.58%",
+    borderWidth: 1,
     borderStyle: "solid",
+    left: "10.63%",
+  },
+  wrapperLayout: {
+    borderRadius: Border.br_5xs_5,
+    bottom: "32.75%",
+    top: "61.8%",
+    width: "36.25%",
+    height: "5.46%",
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row",
     position: "absolute",
-    backgroundColor: Color.colorWhite,
   },
-  veryWrapperBorder: {
-    right: RFValue(36),
-    paddingVertical: RFValue(Padding.p_12xs),
-    borderWidth: RFValue(1),
-    borderColor: Color.colorGainsboro,
-    borderStyle: "solid",
-    borderRadius: RFValue(Border.br_10xs),
-    left: RFValue(36),
-    height: "4.58%",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    position: "absolute",
-    backgroundColor: Color.colorWhite,
-  },
-  veryContainerTypo: {
-    width: RFValue(212),
-    fontFamily: FontFamily.interRegular,
+  backTypo: {
+    fontFamily: FontFamily.poppinsRegular,
+    fontSize: FontSize.size_xs,
     textAlign: "center",
-  },
-  weAreHereFlexBox: {
-    textAlign: "center",
-    color: Color.colorBlack,
-  },
-  questionPosition: {
-    bottom: "29.93%",
-    top: "60.04%",
-    height: "10.04%",
-    padding: RFValue(Padding.p_3xs),
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-  },
-  framePosition: {
-    zIndex: RFValue(0),
-    borderRadius: RFValue(Border.br_8xs),
-    bottom: "17.57%",
-    top: "17.57%",
-    height: "64.86%",
-    position: "absolute",
   },
   welcomeTo1: {
     fontFamily: FontFamily.openSansLight,
@@ -264,126 +246,201 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.interBold,
   },
   welcomeTo: {
-    fontSize: RFValue(FontSize.size_base),
+    fontSize: FontSize.size_base,
+    color: Color.colorBlack,
   },
   nutriphi: {
-    fontSize: RFValue(FontSize.size_5xl),
+    fontSize: FontSize.size_5xl,
     fontFamily: FontFamily.meowScriptRegular,
+    color: Color.colorMediumseagreen,
   },
   welcomeToNutriphiContainer1: {
     width: "100%",
   },
   welcomeToNutriphiContainer: {
-    height: RFValue(36),
-    width: RFValue(283),
+    width: 181,
+    height: 38,
     textAlign: "center",
-    color: Color.colorBlack,
   },
   welcomeToNutriphiWrapper: {
     height: "6.87%",
-    top: "5.64%",
-    bottom: "87.49%",
+    top: "5.63%",
+    bottom: "87.5%",
+    justifyContent: "center",
   },
   selectAnOption: {
-    height: RFValue(46),
-    fontSize: RFValue(FontSize.size_xs),
+    width: 287,
+    height: 50,
+    fontSize: FontSize.size_xs,
     color: Color.colorBlack,
-    width: RFValue(283),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   selectAnOptionToContinueWrapper: {
-    height: "8.73%",
-    top: "11.82%",
-    bottom: "79.45%",
+    height: "8.8%",
+    top: "12.5%",
+    bottom: "78.7%",
+    justifyContent: "center",
   },
   sedentaryTypo: {
-    fontSize: RFValue(FontSize.size_xs),
+    fontSize: FontSize.size_xs,
     color: Color.colorBlack,
   },
   stationaryJobAnd: {
-    fontSize: RFValue(FontSize.size_5xs),
+    fontSize: FontSize.size_5xs,
     color: Color.colorDarkgray_300,
   },
-  sedentaryStationaryJobContainer: {
-    width: RFValue(211),
-  },
   sedentaryStationaryJobAndLWrapper: {
-    top: "22.53%",
-    bottom: "72.89%",
-    paddingHorizontal: RFValue(Padding.p_33xl),
+    top: "22.54%",
+    bottom: "72.01%",
+    borderColor: Color.colorGainsboro,
+    borderRadius: Border.br_5xs_5,
+    width: "78.75%",
+    height: "5.46%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    right: "10.63%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
   },
   notVeryActiveExercise13TWrapper: {
     top: "29.05%",
-    bottom: "66.36%",
-    paddingHorizontal: RFValue(Padding.p_59xl),
+    bottom: "65.49%",
+    borderColor: Color.colorGainsboro,
+    borderRadius: Border.br_5xs_5,
+    width: "78.75%",
+    height: "5.46%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    right: "10.63%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
   },
   somewhatActiveExercise45TWrapper: {
     top: "35.56%",
-    bottom: "59.85%",
-    paddingHorizontal: RFValue(Padding.p_55xl),
+    bottom: "58.98%",
+    borderColor: Color.colorGainsboro,
+    borderRadius: Border.br_5xs_5,
+    width: "78.75%",
+    height: "5.46%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    right: "10.63%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
   },
   moderatelyActiveDailyExerciWrapper: {
-    top: "42.07%",
-    bottom: "53.35%",
-    paddingHorizontal: RFValue(Padding.p_11xl),
+    top: "42.08%",
+    bottom: "52.46%",
+    borderColor: Color.colorGainsboro,
+    borderRadius: Border.br_5xs_5,
+    width: "78.75%",
+    height: "5.46%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    right: "10.63%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
   },
   activeIntenseExercise67TiWrapper: {
-    top: "48.6%",
-    bottom: "46.82%",
-    paddingHorizontal: RFValue(Padding.p_43xl),
-  },
-  veryActiveVeryContainer: {
-    display: "flex",
+    top: "48.59%",
+    bottom: "45.95%",
+    borderColor: Color.colorGainsboro,
+    borderRadius: Border.br_5xs_5,
+    width: "78.75%",
+    height: "5.46%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    right: "10.63%",
+    justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
   },
   veryActiveVeryIntenseExercWrapper: {
     top: "55.11%",
-    bottom: "40.31%",
-    paddingHorizontal: RFValue(Padding.p_26xl),
+    bottom: "39.44%",
+    borderColor: Color.colorGainsboro,
+    borderRadius: Border.br_5xs_5,
+    width: "78.75%",
+    height: "5.46%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    right: "10.63%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
   },
   weAreHere: {
-    fontSize: RFValue(FontSize.size_6xs),
+    fontSize: FontSize.size_6xs,
     fontFamily: FontFamily.interLight,
     fontWeight: "300",
+    color: Color.colorBlack,
+    textAlign: "center",
   },
   weAreHereToHelpYouAchievWrapper: {
-    height: "4.91%",
-    top: "68.36%",
-    bottom: "26.73%",
+    height: "4.93%",
+    top: "68.31%",
+    bottom: "26.76%",
+    justifyContent: "center",
   },
-  frameChild: {
-    right: RFValue(33),
-    left: RFValue(9),
+  continue: {
+    color: Color.colorWhite,
   },
-  questionScreenInner: {
-    width: "50.63%",
-    right: "0%",
-    left: "49.37%",
-  },
-  frameItem: {
-    right: RFValue(6),
-    left: RFValue(32),
-    borderStyle: "solid",
-    borderRadius: RFValue(Border.br_8xs),
-    bottom: "17.57%",
-    top: "17.57%",
-    height: "64.86%",
+  continueWrapper: {
+    left: "53.13%",
+    backgroundColor: Color.colorMediumseagreen,
+    bottom: "32.75%",
+    top: "61.8%",
+    width: "36.25%",
+    right: "10.63%",
   },
   questionScreenChild: {
-    width: "49.37%",
-    right: "50.63%",
-    left: "0%",
-  },
-  questionScreenItem: {
-    top: RFValue(0),
-    height: RFValue(31),
-    left: RFValue(0),
-    right: RFValue(0),
+    top: 0,
+    right: 0,
+    left: 0,
+    height: 31,
     position: "absolute",
     overflow: "hidden",
   },
+  back: {
+    color: Color.colorMediumseagreen,
+  },
+  backWrapper: {
+    right: "53.13%",
+    borderColor: Color.colorMediumseagreen,
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: "10.63%",
+    bottom: "32.75%",
+    top: "61.8%",
+    width: "36.25%",
+  },
   questionScreen: {
-    flex: RFValue(1),
-    height: RFValue(550),
+    flex: 1,
+    height: 568,
     overflow: "hidden",
     backgroundColor: Color.colorWhite,
     width: "100%",
